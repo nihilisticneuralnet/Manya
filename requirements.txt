@@ -1,0 +1,22 @@
+pip
+setuptools
+wheel
+
+# System dependencies (not installable via pip, should be handled separately)
+# ffmpeg
+# libcairo2-dev
+# libpango1.0-dev
+
+manim
+smolagents==1.7.0
+markdownify
+datasets
+sentence-transformers
+duckduckgo-search
+spaces
+gradio-tools
+langchain
+langchain-community
+langchain-huggingface
+faiss-cpu
+fastapi
