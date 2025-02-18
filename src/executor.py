@@ -76,7 +76,6 @@ class ManimExecutorAgent(ManagedAgent):
     def _extract_scene_name(self, code):
         """Extract the Scene class name from the code"""
         import re
-        # Look for class definitions that end with 'Scene'
         pattern = r"class\s+(\w+Scene)\s*\("
         matches = re.findall(pattern, code)
         return matches[-1] if matches else None
@@ -85,23 +84,20 @@ class ManimExecutorAgent(ManagedAgent):
         """Debug the code using the model"""
         prompt = self.debug_template.format(code=code, error=error)
         response = self.agent.run(prompt)
-        return extract_code(response)  # Use the global extract_code function
+        return extract_code(response)  
     
     def execute_code(self, code):
         """Execute the Manim code and return the path to the generated video"""
         with self._create_temp_dir() as temp_dir:
             try:
-                # Extract scene class name from the code
                 scene_name = self._extract_scene_name(code)
                 if not scene_name:
                     raise Exception("Could not find a valid Scene class in the code")
                 
-                # Save the code to a temporary file
                 script_path = os.path.join(temp_dir, "scene.py")
                 with open(script_path, "w") as f:
                     f.write(code)
                 
-                # Run manim command
                 result = subprocess.run(
                     [
                         "python",
@@ -121,7 +117,6 @@ class ManimExecutorAgent(ManagedAgent):
                     fixed_code = self.debug_code(code, result.stderr)
                     return self.execute_code(fixed_code)
                 
-                # Find the generated video
                 videos_dir = os.path.join(temp_dir, "videos", "scene", "480p15")
                 if not os.path.exists(videos_dir):
                     raise Exception(f"Videos directory not found: {videos_dir}")
@@ -130,7 +125,6 @@ class ManimExecutorAgent(ManagedAgent):
                 if not os.path.exists(video_path):
                     raise Exception(f"Video file not found: {video_path}")
                 
-                # Copy to current working directory with a unique name
                 current_dir = os.getcwd()
                 output_path = os.path.join(current_dir, f"output_{scene_name}.mp4")
                 
