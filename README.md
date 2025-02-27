@@ -21,36 +21,55 @@ Follow these steps to set up the project:
 
 Ensure you have all the necessary libraries installed before running these commands.
 
+See [examples](https://github.com/nihilisticneuralnet/Manya/tree/main/examples) for working in a Python notebook.
+
 ## Example Outputs:
 
-## Double-Slit Experiment
 
-**Input:** Illustrate the double-slit experiment, demonstrating wave-particle duality and interference patterns.
+#### Double-Slit Experiment
 
-<video controls width="600">
-  <source src="output/doubleslitscene.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+**Input:** Illustrate the double-slit experiment, demonstrating wave-particle duality and interference patterns
 
----
+https://github.com/user-attachments/assets/6826b0fb-72b9-4917-b4a7-8e2e66bf992d
 
-## Dijkstra's Algorithm
 
-**Input:** Demonstrate Dijkstra's algorithm for finding the shortest path in a weighted graph.
+#### Binary Search Algorithm
 
-<video controls width="600">
-  <source src="examples/dijkstra.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+**Input:** Explain how a binary search algorithm works with a sorted array
 
-- Input: Illustrate the double-slit experiment, demonstrating wave-particle duality and interference patterns
+https://github.com/user-attachments/assets/d4d0a300-8690-4d21-ab99-4ab1d4860979
 
-- Input: Demonstrate Dijkstra's algorithm for finding the shortest path in a weighted graph
-    "Explain the concept of normal distribution with visual representation of mean, standard deviation, and the 68-95-99.7 rule"
-    "Show the proof of the Pythagorean theorem using area visualization"
-    "Visualize the recursive calls in the Fibonacci sequence calculation, showing the call stack and how values are computed"
+https://github.com/user-attachments/assets/5a2c4a36-2258-4de4-bd11-f9b57b852e43
 
-    Explain how a binary search algorithm works with a sorted array
+
+#### Djikstra Algorithm
+
+**Input:** Demonstrate Dijkstra's algorithm for finding the shortest path in a weighted graph
+
+https://github.com/user-attachments/assets/8599983d-4515-43fc-90af-8d4cee5a6ab0
+
+
+
+#### Pythogorean Theorem
+
+**Input:** Show the proof of the Pythagorean theorem using area visualization
+
+https://github.com/user-attachments/assets/7e5ac5bb-265e-43e0-99bd-8512b17d6cba
+
+
+#### Normal Distribution
+
+**Input:** Explain the concept of normal distribution with visual representation of mean, standard deviation, and the 68-95-99.7 rule
+
+https://github.com/user-attachments/assets/1c641190-8129-47c1-97d6-8b79be0f6cef
+
+
+#### Fibonacci Sequence
+
+**Input:** Visualize the recursive calls in the Fibonacci sequence calculation, showing the call stack and how values are computed
+
+https://github.com/user-attachments/assets/d57df3b5-60a6-48c3-a1e7-c61107072dfa
+
 
 
 ## Next Steps
