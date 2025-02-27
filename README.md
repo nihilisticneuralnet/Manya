@@ -26,7 +26,9 @@ Ensure you have all the necessary libraries installed before running these comma
 
 ## Workflow
 
-![manya](./img/manya.png)
+<p align="center">
+  <img src="./img/manya.png">
+</p>
 
 
 ## Example Outputs:
