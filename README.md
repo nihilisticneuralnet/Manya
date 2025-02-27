@@ -21,7 +21,7 @@ Follow these steps to set up the project:
 
 Ensure you have all the necessary libraries installed before running these commands.
 
-See [examples](https://github.com/nihilisticneuralnet/Manya/tree/main/examples) for working in a Python notebook.
+*See [examples](https://github.com/nihilisticneuralnet/Manya/tree/main/examples) for working in a Python notebook.*
 
 ## Example Outputs:
 
