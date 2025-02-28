@@ -1,6 +1,6 @@
 # **Manya**: Multi Agent AI Manim Generator
 
-**Abstract**: **Manya** is a multi-agent AI system leveraging SmolAgents and Qwen to automate the generation of Manim animations. The system comprises specialized agents for code generation, debugging, execution, and optimization, streamlining the creation of high-quality educational visualizations. By integrating intelligent task delegation and iterative refinement, it enhances efficiency and accuracy in producing complex mathematical and scientific animations.
+**Manya** is a multi-agent AI system leveraging SmolAgents and Qwen to automate the generation of Manim animations. The system comprises specialized agents for code generation, debugging, execution, and optimization, streamlining the creation of high-quality educational visualizations. By integrating intelligent task delegation and iterative refinement, it enhances efficiency and accuracy in producing complex mathematical and scientific animations.
 
 
 ## Installation
@@ -17,7 +17,7 @@ Follow these steps to set up the project:
    ```
    Replace `<huggingface_token>` with your actual API key.
 
-4. **Run the Application**: Finally, run the application using Streamlit by executing `python -m streamlit run app.py`.
+4. **Run the Application**: Finally, run the application using Streamlit by executing `python -m streamlit run main.py`.
 
 Ensure you have all the necessary libraries installed before running these commands.
 
