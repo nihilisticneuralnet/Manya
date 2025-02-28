@@ -11,7 +11,7 @@ Follow these steps to set up the project:
 
 2. **Install Dependencies**: Navigate to the project directory and install the required packages by running `cd <repository-directory>` followed by `pip install -r requirements.txt`. 
 
-3. **Set Up Environment Variables**: In the `.env` file in the project root directory and insert your Gemini and Sarvam API keys as follows:
+3. **Set Up Environment Variables**: In the `.env` file in the project root directory and insert your Hugging Face token as follows:
    ```plaintext
    HF_TOKEN= "<huggingface_token>"
    ```
