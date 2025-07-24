@@ -69,13 +69,11 @@ Fixed code:
         }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate initial Manim code"""
         request = input_data['request']
         scene_outline = input_data.get('scene_outline', '')
         
         logger.info(f"💻 Generating Manim code for: {request.description}")
         
-        # Get relevant context
         rag_result = self.rag_agent.process({'query': request.description})
         context = rag_result['context']
         
@@ -123,7 +121,6 @@ Return ONLY the Python code, properly indented with 4 spaces, no explanations.
         chain = code_prompt | self.llm
         response = chain.invoke({})
         
-        # Extract and clean the code
         code = self.extract_code_from_response(response.content)
         if not code:
             code = response.content.strip()
@@ -134,25 +131,23 @@ Return ONLY the Python code, properly indented with 4 spaces, no explanations.
         }
     
     def extract_code_from_response(self, response: str) -> str:
-        """Extract Python code from LLM response"""
-        # Try to extract code from markdown blocks
+        # try to extract code from markdown blocks
         code_blocks = re.findall(r'```python\n(.*?)\n```', response, re.DOTALL)
         if code_blocks:
             return code_blocks[0].strip()
         
-        # Try to extract code from any code blocks
+        # try to extract code from any code blocks
         code_blocks = re.findall(r'```\n(.*?)\n```', response, re.DOTALL)
         if code_blocks:
             return code_blocks[0].strip()
         
-        # Last resort: return the whole response if it looks like code
+        # return the whole response if it looks like code
         if 'class' in response and 'def construct' in response:
             return response.strip()
         
         return ""
     
     def identify_error_type(self, error_message: str) -> str:
-        """Identify the type of error based on error message"""
         for error_type, pattern in self.error_patterns.items():
             if re.search(pattern, error_message, re.IGNORECASE):
                 return error_type
@@ -180,7 +175,6 @@ Return ONLY the Python code, properly indented with 4 spaces, no explanations.
         return self.extract_code_from_response(response.content)
     
     def format_previous_attempts(self, attempts: List[IterationResult]) -> str:
-        """Format previous attempts for context"""
         if not attempts:
             return "No previous attempts."
         
