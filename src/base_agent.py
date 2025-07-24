@@ -10,8 +10,7 @@ class BaseAgent:
         self.name = name
         self.llm = llm
         self.agent_type = agent_type
-        logger.info(f"🤖 Initialized {self.name} ({agent_type.value})")
+        logger.info(f"Initialized {self.name} ({agent_type.value})")
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process input and return results"""
         raise NotImplementedError("Each agent must implement process method")
