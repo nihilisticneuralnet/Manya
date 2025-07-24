@@ -17,26 +17,24 @@ class CodeExecutorAgent(BaseAgent):
         self.max_iterations = 5
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute Manim code with iterative debugging"""
+        # Execute code with iterative debugging
         code = input_data['code']
         
-        logger.info(f"🎬 Executing Manim code")
+        logger.info(f"Executing Manim code")
         
-        # First attempt
         initial_result = self._execute_code_once(code)
         
         if initial_result['success']:
             return initial_result
         
-        # If failed, try iterative debugging
-        logger.info("🔧 Initial execution failed, starting iterative debugging...")
+        logger.info("Initial execution failed, starting iterative debugging...")
         debug_result = self.debug_code_iteratively(code, initial_result['error'])
         
         if debug_result.success:
-            logger.info("✅ Code fixed through iterative debugging")
+            logger.info("Code fixed through iterative debugging")
             return self._execute_code_once(debug_result.code)
         else:
-            logger.error("❌ Could not fix code through iterative debugging")
+            logger.error("Could not fix code through iterative debugging")
             return {
                 "success": False,
                 "error": f"Code could not be fixed after {self.max_iterations} iterations. Last error: {debug_result.error}",
@@ -44,18 +42,17 @@ class CodeExecutorAgent(BaseAgent):
             }
     
     def debug_code_iteratively(self, initial_code: str, initial_error: str) -> IterationResult:
-        """Debug code with iterative learning approach"""
         attempts = []
         current_code = initial_code
         
         for iteration in range(1, self.max_iterations + 1):
-            logger.info(f"🔄 Debug iteration {iteration}/{self.max_iterations}")
+            logger.info(f"Debug iteration {iteration}/{self.max_iterations}")
             
-            # Test current code
+            # test current code
             execution_result = self.test_code_execution(current_code)
             
             if execution_result['success']:
-                logger.info(f"✅ Code fixed successfully in iteration {iteration}")
+                logger.info(f"Code fixed successfully in iteration {iteration}")
                 return IterationResult(
                     iteration=iteration,
                     code=current_code,
@@ -65,7 +62,7 @@ class CodeExecutorAgent(BaseAgent):
             error_message = execution_result['error']
             error_type = self.code_generator.identify_error_type(error_message)
             
-            # Record this attempt
+            # record this attempt
             attempt = IterationResult(
                 iteration=iteration,
                 code=current_code,
@@ -74,22 +71,21 @@ class CodeExecutorAgent(BaseAgent):
             )
             attempts.append(attempt)
             
-            # Use code generator to debug
             try:
                 new_code = self.code_generator.debug_code(current_code, error_message, attempts[:-1])
                 if new_code and new_code != current_code:
                     current_code = new_code
-                    logger.info(f"🔧 Applied debugging fixes for {error_type} error")
+                    logger.info(f"Applied debugging fixes for {error_type} error")
                 else:
-                    logger.warning(f"⚠️ No different solution provided in iteration {iteration}")
+                    logger.warning(f"No different solution provided in iteration {iteration}")
                     if iteration > 2:
                         break
                         
             except Exception as e:
-                logger.error(f"❌ Error in debugging iteration {iteration}: {e}")
+                logger.error(f"Error in debugging iteration {iteration}: {e}")
                 break
         
-        logger.warning(f"⚠️ Could not fix code after {self.max_iterations} iterations")
+        logger.warning(f"Could not fix code after {self.max_iterations} iterations")
         return IterationResult(
             iteration=self.max_iterations,
             code=current_code,
@@ -98,7 +94,7 @@ class CodeExecutorAgent(BaseAgent):
         )
     
     def test_code_execution(self, code: str) -> Dict[str, Any]:
-        """Test code execution without creating video file"""
+        # test code execution without creating video file
         with self._create_temp_dir() as temp_dir:
             try:
                 scene_name = self._extract_scene_name(code)
@@ -112,7 +108,6 @@ class CodeExecutorAgent(BaseAgent):
                 with open(script_path, "w") as f:
                     f.write(code)
                 
-                # Test syntax by importing the module
                 sys.path.insert(0, temp_dir)
                 
                 try:
@@ -120,7 +115,6 @@ class CodeExecutorAgent(BaseAgent):
                     module = importlib.util.module_from_spec(spec)
                     spec.loader.exec_module(module)
                     
-                    # Check if the scene class exists and is properly defined
                     if hasattr(module, scene_name):
                         scene_class = getattr(module, scene_name)
                         if hasattr(scene_class, 'construct'):
@@ -139,7 +133,7 @@ class CodeExecutorAgent(BaseAgent):
                 return {"success": False, "error": str(e)}
     
     def _execute_code_once(self, code: str) -> Dict[str, Any]:
-        """Execute the Manim code once and return the path to the generated video"""
+        # execute the Manim code once and return the path to the generated video
         with self._create_temp_dir() as temp_dir:
             try:
                 scene_name = self._extract_scene_name(code)
@@ -175,7 +169,7 @@ class CodeExecutorAgent(BaseAgent):
                         "scene_name": scene_name
                     }
                 
-                # Find and copy the generated video
+                # find and copy the generated video
                 video_files = []
                 for root, dirs, files in os.walk(temp_dir):
                     for file in files:
@@ -189,7 +183,6 @@ class CodeExecutorAgent(BaseAgent):
                         "scene_name": scene_name
                     }
                 
-                # Copy to output directory
                 video_path = video_files[0]
                 output_filename = f"output_{scene_name}.mp4"
                 output_path = os.path.join(self.output_dir, output_filename)
@@ -220,8 +213,7 @@ class CodeExecutorAgent(BaseAgent):
             shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _extract_scene_name(self, code: str) -> Optional[str]:
-        """Extract the scene class name from the code"""
-        # Look for class definitions that inherit from Scene
+        # look for class definitions that inherit from Scene
         pattern = r'class\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*Scene[^)]*\):'
         matches = re.findall(pattern, code)
         if matches:
