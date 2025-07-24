@@ -1,0 +1,9 @@
+langchain
+langchain-groq
+langchain-huggingface
+langchain-community
+faiss-cpu
+manim
+sarvam-ai
+transformers
+sentence-transformers
