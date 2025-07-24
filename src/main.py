@@ -9,8 +9,7 @@ from utils import setup_logging, ensure_directory_exists
 logger = setup_logging()
 
 def main():
-    """Main entry point for the animation system"""
-    print("🎬 Multi-Agent Manim Animation System")
+    print("Manya: Multi-Agent Manim Animation System")
     print("=" * 50)
     print("- RAG Router: Provides relevant Manim documentation context")
     print("- Planner: Creates scene outlines and storyboards")
