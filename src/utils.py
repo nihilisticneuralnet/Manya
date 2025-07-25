@@ -26,24 +26,19 @@ def setup_logging(level: int = logging.INFO,
     if format_string is None:
         format_string = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     
-    # Create formatter
     formatter = logging.Formatter(format_string)
     
-    # Configure root logger
     logger = logging.getLogger('manim_animation_system')
     logger.setLevel(level)
     
-    # Remove existing handlers to avoid duplicates
     for handler in logger.handlers[:]:
         logger.removeHandler(handler)
     
-    # Console handler
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(level)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
     
-    # File handler (optional)
     if log_file:
         ensure_directory_exists(os.path.dirname(log_file))
         file_handler = logging.FileHandler(log_file)
@@ -78,20 +73,19 @@ def extract_code_from_response(response: str) -> str:
     Returns:
         Extracted Python code as string
     """
-    # Try to extract code from python markdown blocks
+    # try to extract code from python markdown blocks
     python_blocks = re.findall(r'```python\n(.*?)\n```', response, re.DOTALL)
     if python_blocks:
         return python_blocks[0].strip()
     
-    # Try to extract code from generic markdown blocks
+    # try to extract code from generic markdown blocks
     generic_blocks = re.findall(r'```\n(.*?)\n```', response, re.DOTALL)
     if generic_blocks:
-        # Check if it looks like Python code
         code_candidate = generic_blocks[0].strip()
         if looks_like_python_code(code_candidate):
             return code_candidate
     
-    # Try to extract code from single backtick blocks
+    # try to extract code from single backtick blocks
     single_tick_blocks = re.findall(r'`([^`]*class[^`]*Scene[^`]*)`', response, re.DOTALL)
     if single_tick_blocks:
         return single_tick_blocks[0].strip()
@@ -125,7 +119,6 @@ def looks_like_python_code(text: str) -> bool:
     text_lower = text.lower()
     matches = sum(1 for pattern in python_indicators if re.search(pattern, text, re.IGNORECASE))
     
-    # If we find multiple Python indicators, it's likely Python code
     return matches >= 2
 
 def extract_scene_name(code: str) -> Optional[str]:
@@ -138,7 +131,6 @@ def extract_scene_name(code: str) -> Optional[str]:
     Returns:
         Scene class name if found, None otherwise
     """
-    # Look for class definitions that inherit from Scene
     scene_patterns = [
         r'class\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^)]*Scene[^)]*\)\s*:',
         r'class\s+([A-Za-z_][A-Za-z0-9_]*Scene[A-Za-z0-9_]*)\s*\([^)]*\)\s*:',
@@ -186,7 +178,7 @@ def format_previous_attempts(attempts: List[Dict[str, Any]]) -> str:
         elif 'fixes_applied' in attempt and attempt['fixes_applied']:
             formatted_lines.append(f"  Fixes Applied: {', '.join(attempt['fixes_applied'])}")
         
-        formatted_lines.append("")  # Empty line between attempts
+        formatted_lines.append("")  
     
     return "\n".join(formatted_lines)
 
@@ -206,15 +198,15 @@ def create_temp_dir(prefix: str = "manim_temp_", cleanup: bool = True):
     logger = logging.getLogger('manim_animation_system')
     
     try:
-        logger.debug(f"📁 Created temporary directory: {temp_dir}")
+        logger.debug(f"Created temporary directory: {temp_dir}")
         yield temp_dir
     finally:
         if cleanup:
             try:
                 shutil.rmtree(temp_dir, ignore_errors=True)
-                logger.debug(f"🗑️ Cleaned up temporary directory: {temp_dir}")
+                logger.debug(f"Cleaned up temporary directory: {temp_dir}")
             except Exception as e:
-                logger.warning(f"⚠️ Failed to clean up temporary directory {temp_dir}: {e}")
+                logger.warning(f"Failed to clean up temporary directory {temp_dir}: {e}")
 
 def validate_python_syntax(code: str) -> Dict[str, Any]:
     """
@@ -263,20 +255,16 @@ def clean_code_indentation(code: str, indent_size: int = 4) -> str:
     cleaned_lines = []
     
     for line in lines:
-        # Replace tabs with spaces
         line = line.expandtabs(indent_size)
         
-        # Normalize multiple spaces at beginning to proper indentation
         stripped = line.lstrip()
-        if stripped:  # Non-empty line
-            # Count original indentation level (roughly)
+        if stripped:  
             original_indent = len(line) - len(stripped)
-            # Normalize to proper indentation
             indent_level = original_indent // indent_size
             proper_indent = ' ' * (indent_level * indent_size)
             cleaned_lines.append(proper_indent + stripped)
         else:
-            cleaned_lines.append('')  # Empty line
+            cleaned_lines.append('')  
     
     return '\n'.join(cleaned_lines)
 
@@ -338,12 +326,10 @@ def safe_filename(filename: str, max_length: int = 255) -> str:
     Returns:
         Safe filename
     """
-    # Remove or replace problematic characters
     safe_chars = re.sub(r'[<>:"/\\|?*]', '_', filename)
-    safe_chars = re.sub(r'\s+', '_', safe_chars)  # Replace whitespace with underscores
-    safe_chars = re.sub(r'_+', '_', safe_chars)   # Replace multiple underscores with single
+    safe_chars = re.sub(r'\s+', '_', safe_chars) 
+    safe_chars = re.sub(r'_+', '_', safe_chars)  
     
-    # Truncate if too long
     if len(safe_chars) > max_length:
         name, ext = os.path.splitext(safe_chars)
         max_name_length = max_length - len(ext)
@@ -359,12 +345,10 @@ def get_project_root() -> Path:
         Path object pointing to project root
     """
     current_file = Path(__file__).resolve()
-    # Assume project root contains main.py or requirements.txt
     for parent in current_file.parents:
         if (parent / 'main.py').exists() or (parent / 'requirements.txt').exists():
             return parent
     
-    # Fallback to current file's directory
     return current_file.parent
 
 def format_duration(seconds: float) -> str:
@@ -399,10 +383,8 @@ def estimate_speech_duration(text: str, words_per_minute: int = 150) -> float:
     Returns:
         Estimated duration in seconds
     """
-    # Simple word count (split by whitespace)
     word_count = len(text.split())
     
-    # Calculate duration in minutes, then convert to seconds
     duration_minutes = word_count / words_per_minute
     return duration_minutes * 60
 
@@ -441,7 +423,7 @@ def parse_error_message(error_message: str) -> Dict[str, Any]:
         "suggestions": []
     }
     
-    # Common error patterns
+    # common error patterns
     patterns = {
         "syntax_error": r"SyntaxError: (.+)",
         "indentation_error": r"IndentationError: (.+)",
@@ -458,12 +440,10 @@ def parse_error_message(error_message: str) -> Dict[str, Any]:
             error_info["message"] = match.group(1) if len(match.groups()) == 1 else match.group(2)
             break
     
-    # Extract line number if present
     line_match = re.search(r"line (\d+)", error_message, re.IGNORECASE)
     if line_match:
         error_info["line_number"] = int(line_match.group(1))
     
-    # Extract file name if present
     file_match = re.search(r"File \"([^\"]+)\"", error_message)
     if file_match:
         error_info["file"] = file_match.group(1)
