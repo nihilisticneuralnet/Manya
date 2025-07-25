@@ -19,19 +19,16 @@ def main():
     print("- Audio Generator: Converts text to speech and combines with video")
     print("- Manager: Coordinates all agents and manages the pipeline")
     
-    # Get API keys from environment
-    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
-    SARVAM_API_KEY = os.getenv("SARVAM_API_KEY", "sk_ys5zk0cw_fz7vUES7shW6SU0QKQdX2Bv6")
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "your_groq_api")
+    SARVAM_API_KEY = os.getenv("SARVAM_API_KEY", "your_sarvam_api")
     
     if not GROQ_API_KEY:
-        logger.error("❌ GROQ_API_KEY not found in environment variables")
+        logger.error("GROQ_API_KEY not found in environment variables")
         return
     
-    # Setup output directory
     output_dir = "./output"
     ensure_directory_exists(output_dir)
     
-    # Initialize pipeline
     try:
         pipeline = AnimationPipeline(
             groq_api_key=GROQ_API_KEY,
@@ -39,8 +36,7 @@ def main():
             output_dir=output_dir
         )
         
-        # Example animation creation
-        print("\n🚀 Creating example animation...")
+        print("\nCreating animation...")
         results = pipeline.create_animation(
             description="Expand (a+b)^2. Don't draw any square",
             duration=15,
@@ -48,31 +44,29 @@ def main():
             complexity="medium"
         )
         
-        print("\n🎉 ANIMATION CREATION COMPLETED")
+        print("\nANIMATION CREATION COMPLETED")
         print("=" * 50)
         
-        # Display results
         if "summary" in results:
             summary = results["summary"]
             for key, value in summary.items():
                 if key == "animation_request":
-                    print(f"📝 {key.replace('_', ' ').title()}: {value}")
+                    print(f"{key.replace('_', ' ').title()}: {value}")
                 elif key in ["duration", "style"]:
-                    print(f"⚙️ {key.replace('_', ' ').title()}: {value}")
+                    print(f"{key.replace('_', ' ').title()}: {value}")
                 else:
                     print(f"   {key.replace('_', ' ').title()}: {value}")
         
-        # List available outputs
         outputs = pipeline.get_available_outputs()
         if outputs:
-            print(f"\n📁 Available output files:")
+            print(f"\nAvailable output files:")
             for output in outputs:
                 print(f"   - {output}")
         
         return results
         
     except Exception as e:
-        logger.error(f"❌ Pipeline initialization failed: {e}")
+        logger.error(f"Pipeline initialization failed: {e}")
         return {"success": False, "error": str(e)}
 
 def create_custom_animation(description: str, duration: int = 10, 
@@ -95,7 +89,7 @@ def create_custom_animation(description: str, duration: int = 10,
     SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
     
     if not GROQ_API_KEY:
-        logger.error("❌ GROQ_API_KEY not found in environment variables")
+        logger.error("GROQ_API_KEY not found in environment variables")
         return {"success": False, "error": "Missing GROQ_API_KEY"}
     
     try:
@@ -117,18 +111,17 @@ def create_custom_animation(description: str, duration: int = 10,
         return results
         
     except Exception as e:
-        logger.error(f"❌ Custom animation creation failed: {e}")
+        logger.error(f"Custom animation creation failed: {e}")
         return {"success": False, "error": str(e)}
 
 if __name__ == "__main__":
-    # Set up environment variables if not already set
+    # set up environment variables if not already set
     if not os.getenv("GROQ_API_KEY"):
-        print("⚠️ Warning: Set GROQ_API_KEY environment variable")
+        print("Warning: Set GROQ_API_KEY environment variable")
         print("   Example: export GROQ_API_KEY='your_key_here'")
     
     if not os.getenv("SARVAM_API_KEY"):
-        print("⚠️ Optional: Set SARVAM_API_KEY for audio generation")
+        print("Optional: Set SARVAM_API_KEY for audio generation")
         print("   Example: export SARVAM_API_KEY='your_key_here'")
     
-    # Run the main application
     main()
