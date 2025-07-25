@@ -58,9 +58,9 @@ def ensure_directory_exists(directory: str) -> None:
     if directory and not os.path.exists(directory):
         try:
             os.makedirs(directory, exist_ok=True)
-            logging.getLogger('manim_animation_system').info(f"📁 Created directory: {directory}")
+            logging.getLogger('manim_animation_system').info(f"Created directory: {directory}")
         except OSError as e:
-            logging.getLogger('manim_animation_system').error(f"❌ Failed to create directory {directory}: {e}")
+            logging.getLogger('manim_animation_system').error(f"Failed to create directory {directory}: {e}")
             raise
 
 def extract_code_from_response(response: str) -> str:
