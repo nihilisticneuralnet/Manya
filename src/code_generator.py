@@ -154,7 +154,6 @@ Return ONLY the Python code, properly indented with 4 spaces, no explanations.
         return 'general'
     
     def debug_code(self, code: str, error: str, previous_attempts: List[IterationResult] = None) -> str:
-        """Debug code based on error"""
         error_type = self.identify_error_type(error)
         template = self.debug_templates.get(error_type, self.debug_templates['general'])
         
