@@ -11,12 +11,9 @@ class PlannerAgent(BaseAgent):
         self.rag_agent = rag_agent
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create detailed scene outline"""
         request = input_data['request']
         
-        logger.info(f"🎬 Creating scene outline for: {request.description}")
-        
-        # Get relevant context
+        logger.info(f"Creating scene outline for: {request.description}")        
         rag_result = self.rag_agent.process({'query': request.description})
         context = rag_result['context']
         
