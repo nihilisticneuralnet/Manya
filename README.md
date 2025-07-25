@@ -29,29 +29,6 @@ graph TD
 
 
 
-## Configuration
-
-### Animation Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `description` | str | Required | Natural language description of the animation |
-| `duration` | int | 10 | Duration in seconds |
-| `style` | str | "educational" | Animation style (educational, presentation, etc.) |
-| `complexity` | str | "medium" | Complexity level (simple, medium, complex) |
-
-
-## Output Structure
-
-```
-output/
-├── output_SceneName.mp4      # Generated Manim animation
-├── narration.wav             # Generated audio (if enabled)
-├── final_animation.mp4       # Combined audio + video
-└── scene.py                  # Generated Manim code
-```
-
-
 ## Installation
 
 ### Setup
@@ -74,6 +51,25 @@ python main.py
 ```
 
 or you can refer to [notebook](https://github.com/nihilisticneuralnet/Manya/blob/main/manya_example.ipynb)
+
+
+## Configuration
+
+### Animation Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `description` | str | Required | Natural language description of the animation |
+| `duration` | int | 10 | Duration in seconds |
+| `style` | str | "educational" | Animation style (educational, presentation, etc.) |
+| `complexity` | str | "medium" | Complexity level (simple, medium, complex) |
+
+
+## Results
+
+**Prompt: Expand (a+b)^2 without using any squares**
+
+https://github.com/user-attachments/assets/3b2a6c12-e2af-472f-b346-f93b278de2b6
 
 
 
