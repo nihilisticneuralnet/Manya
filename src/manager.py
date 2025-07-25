@@ -22,13 +22,12 @@ class ManagerAgent(BaseAgent):
         self.narrator_agent = NarratorAgent(llm)
         self.audio_generator_agent = AudioGeneratorAgent(llm, sarvam_api_key)
         
-        logger.info("🎯 Manager Agent initialized with all sub-agents")
+        logger.info("Manager Agent initialized with all sub-agents")
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Coordinate the entire animation generation process"""
         request = input_data['request']
         
-        logger.info(f"🚀 Starting animation generation for: {request.description}")
+        logger.info(f"Starting animation generation for: {request.description}")
         
         results = {}
         
@@ -41,13 +40,13 @@ class ManagerAgent(BaseAgent):
             planner_result = self.planner_agent.process({'request': request})
             results["scene_outline"] = planner_result["scene_outline"]
             
-            print("📝 SCENE OUTLINE:")
+            print("SCENE OUTLINE:")
             print("-" * 40)
             print(planner_result["scene_outline"])
             
             # Step 2: Generate Manim code
             print("\n" + "="*60)
-            print("💻 STEP 2: GENERATING MANIM CODE")
+            print("STEP 2: GENERATING MANIM CODE")
             print("="*60)
             
             code_gen_result = self.code_generator_agent.process({
@@ -62,7 +61,7 @@ class ManagerAgent(BaseAgent):
             
             # Step 3: Execute Manim code
             print("\n" + "="*60)
-            print("🎬 STEP 3: EXECUTING MANIM CODE")
+            print("STEP 3: EXECUTING MANIM CODE")
             print("="*60)
             
             execution_result = self.code_executor_agent.process({
@@ -70,7 +69,7 @@ class ManagerAgent(BaseAgent):
             })
             results["execution_result"] = execution_result
             
-            print("🎬 EXECUTION RESULTS:")
+            print("EXECUTION RESULTS:")
             print("-" * 40)
             print(f"Success: {execution_result.get('success', False)}")
             
@@ -84,7 +83,7 @@ class ManagerAgent(BaseAgent):
             
             # Step 4: Generate narration script
             print("\n" + "="*60)
-            print("🎙️ STEP 4: GENERATING NARRATION SCRIPT")
+            print("STEP 4: GENERATING NARRATION SCRIPT")
             print("="*60)
             
             narrator_result = self.narrator_agent.process({
@@ -93,13 +92,13 @@ class ManagerAgent(BaseAgent):
             })
             results["narration"] = narrator_result["script"]
             
-            print("📝 NARRATION SCRIPT:")
+            print("NARRATION SCRIPT:")
             print("-" * 40)
             print(narrator_result["script"])
             
             # Step 5: Generate audio (if TTS is available)
             print("\n" + "="*60)
-            print("🔊 STEP 5: GENERATING AUDIO NARRATION")
+            print("STEP 5: GENERATING AUDIO NARRATION")
             print("="*60)
             
             if SARVAM_AVAILABLE and self.audio_generator_agent.sarvam_api_key:
@@ -109,7 +108,7 @@ class ManagerAgent(BaseAgent):
                 })
                 results["audio_result"] = audio_result
                 
-                print("🔊 AUDIO GENERATION RESULTS:")
+                print("AUDIO GENERATION RESULTS:")
                 print("-" * 40)
                 print(f"Success: {audio_result.get('success', False)}")
                 
@@ -129,7 +128,7 @@ class ManagerAgent(BaseAgent):
                         )
                         results["final_video"] = combine_result
                         
-                        print("🎬 FINAL VIDEO RESULTS:")
+                        print("FINAL VIDEO RESULTS:")
                         print("-" * 40)
                         print(f"Success: {combine_result.get('success', False)}")
                         if combine_result.get('success'):
@@ -139,12 +138,12 @@ class ManagerAgent(BaseAgent):
                 else:
                     print(f"Audio Error: {audio_result.get('error')}")
             else:
-                print("⚠️ Audio generation skipped - TTS not available or API key not provided")
+                print("Audio generation skipped - TTS not available or API key not provided")
                 results["audio_result"] = {"success": False, "error": "TTS not available"}
             
             # Final summary
             print("\n" + "="*60)
-            print("📋 FINAL SUMMARY")
+            print("FINAL SUMMARY")
             print("="*60)
             
             summary = {
@@ -161,9 +160,9 @@ class ManagerAgent(BaseAgent):
             
             for key, value in summary.items():
                 if key == "animation_request":
-                    print(f"📝 {key.replace('_', ' ').title()}: {value}")
+                    print(f"{key.replace('_', ' ').title()}: {value}")
                 elif key in ["duration", "style"]:
-                    print(f"⚙️ {key.replace('_', ' ').title()}: {value}")
+                    print(f"{key.replace('_', ' ').title()}: {value}")
                 else:
                     print(f"   {key.replace('_', ' ').title()}: {value}")
             
@@ -171,7 +170,7 @@ class ManagerAgent(BaseAgent):
             return results
             
         except Exception as e:
-            logger.error(f"❌ Error in animation generation pipeline: {e}")
+            logger.error(f"Error in animation generation pipeline: {e}")
             return {
                 "success": False,
                 "error": str(e),
