@@ -13,13 +13,11 @@ class RAGRouterAgent(BaseAgent):
         self.setup_rag_system()
     
     def setup_embeddings(self):
-        """Initialize embeddings for RAG"""
         self.embeddings = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2"
         )
         
     def setup_rag_system(self):
-        """Setup RAG system with Manim documentation"""
         docs_content = [
             "Manim Scene: A Scene is the main container for animations. Use Scene class to create animations.",
             "Manim Mobject: Mathematical objects (Mobject) are the building blocks of Manim animations.",
@@ -43,7 +41,6 @@ class RAGRouterAgent(BaseAgent):
         self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
         
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get relevant context for the query"""
         query = input_data.get('query', '')
         relevant_docs = self.retriever.get_relevant_documents(query)
         context = "\n".join([doc.page_content for doc in relevant_docs])
