@@ -9,7 +9,7 @@ from utils import setup_logging, ensure_directory_exists
 logger = setup_logging()
 
 def main():
-    print("Manya: Multi-Agent Manim Animation System")
+    print("Manya: Multi-Agent AI Manim Animation System")
     print("=" * 50)
     print("- RAG Router: Provides relevant Manim documentation context")
     print("- Planner: Creates scene outlines and storyboards")
@@ -115,7 +115,6 @@ def create_custom_animation(description: str, duration: int = 10,
         return {"success": False, "error": str(e)}
 
 if __name__ == "__main__":
-    # set up environment variables if not already set
     if not os.getenv("GROQ_API_KEY"):
         print("Warning: Set GROQ_API_KEY environment variable")
         print("   Example: export GROQ_API_KEY='your_key_here'")
