@@ -1,4 +1,4 @@
-# Manya: Multi-Agent AI Manim Generator
+# Manya: Multi-Agent AI Manim Generation System
 
 A multi-agent system that generates educational animations using 3Blue1Brown's [Manim](https://www.manim.community/).
 
