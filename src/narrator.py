@@ -9,11 +9,10 @@ class NarratorAgent(BaseAgent):
         super().__init__("Narrator", llm, AgentType.NARRATOR)
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate narration script"""
         request = input_data['request']
         scene_outline = input_data.get('scene_outline', '')
         
-        logger.info(f"🎙️ Generating narration script for: {request.description}")
+        logger.info(f"Generating narration script for: {request.description}")
         
         script_prompt = ChatPromptTemplate.from_messages([
             ("system", "You are a professional educational content narrator. Create engaging, clear narration scripts."),
