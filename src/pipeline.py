@@ -14,23 +14,19 @@ class AnimationPipeline:
         self.sarvam_api_key = sarvam_api_key
         self.output_dir = output_dir
         
-        # Ensure output directory exists
         os.makedirs(self.output_dir, exist_ok=True)
         
-        # Initialize the LLM
         self.llm = ChatGroq(
             groq_api_key=groq_api_key,
             model_name="llama3-70b-8192",
             temperature=0.1
         )
         
-        # Initialize the manager agent
         self.manager = ManagerAgent(self.llm, sarvam_api_key, output_dir)
         
-        logger.info("🚀 Animation Pipeline initialized successfully")
+        logger.info("Animation Pipeline initialized successfully")
     
     def create_animation(self, description: str, duration: int = 10, style: str = "educational", complexity: str = "medium") -> Dict[str, Any]:
-        """Create an animation based on the given parameters"""
         request = AnimationRequest(
             description=description,
             duration=duration,
@@ -38,15 +34,12 @@ class AnimationPipeline:
             complexity=complexity
         )
         
-        logger.info(f"🎬 Creating animation: {description}")
-        
-        # Process the request through the manager
+        logger.info(f"Creating animation: {description}")
         results = self.manager.process({'request': request})
         
         return results
     
     def get_available_outputs(self) -> List[str]:
-        """Get list of available output files"""
         outputs = []
         for file in os.listdir(self.output_dir):
             if file.endswith(('.mp4', '.wav', '.py')):
