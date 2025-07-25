@@ -94,7 +94,6 @@ class CodeExecutorAgent(BaseAgent):
         )
     
     def test_code_execution(self, code: str) -> Dict[str, Any]:
-        # test code execution without creating video file
         with self._create_temp_dir() as temp_dir:
             try:
                 scene_name = self._extract_scene_name(code)
@@ -133,7 +132,6 @@ class CodeExecutorAgent(BaseAgent):
                 return {"success": False, "error": str(e)}
     
     def _execute_code_once(self, code: str) -> Dict[str, Any]:
-        # execute the Manim code once and return the path to the generated video
         with self._create_temp_dir() as temp_dir:
             try:
                 scene_name = self._extract_scene_name(code)
@@ -169,7 +167,6 @@ class CodeExecutorAgent(BaseAgent):
                         "scene_name": scene_name
                     }
                 
-                # find and copy the generated video
                 video_files = []
                 for root, dirs, files in os.walk(temp_dir):
                     for file in files:
