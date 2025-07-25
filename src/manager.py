@@ -34,7 +34,7 @@ class ManagerAgent(BaseAgent):
         try:
             # Step 1: Create scene outline
             print("\n" + "="*60)
-            print("🎬 STEP 1: CREATING SCENE OUTLINE")
+            print("STEP 1: CREATING SCENE OUTLINE")
             print("="*60)
             
             planner_result = self.planner_agent.process({'request': request})
@@ -55,7 +55,7 @@ class ManagerAgent(BaseAgent):
             })
             results["code"] = code_gen_result["code"]
             
-            print("💻 GENERATED MANIM CODE:")
+            print("GENERATED MANIM CODE:")
             print("-" * 40)
             print(code_gen_result["code"])
             
@@ -118,7 +118,7 @@ class ManagerAgent(BaseAgent):
                     # Step 6: Combine audio and video
                     if execution_result.get('success'):
                         print("\n" + "="*60)
-                        print("🎬 STEP 6: COMBINING AUDIO AND VIDEO")
+                        print("STEP 6: COMBINING AUDIO AND VIDEO")
                         print("="*60)
                         
                         combine_result = self.audio_generator_agent.combine_audio_video(
