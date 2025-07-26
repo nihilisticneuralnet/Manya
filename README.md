@@ -5,28 +5,9 @@ A multi-agent system that generates educational animations using 3Blue1Brown's [
 
 ## Architecture
 
-```mermaid
-graph TD
-    A[User Request] --> B[Manager Agent]
-    B --> C[RAG Router Agent]
-    B --> D[Planner Agent]
-    B --> E[Code Generator Agent]
-    B --> F[Code Executor Agent]
-    B --> G[Narrator Agent]
-    B --> H[Audio Generator Agent]
-    
-    C --> |Context| D
-    C --> |Context| E
-    D --> |Scene Outline| E
-    D --> |Scene Outline| G
-    E --> |Generated Code| F
-    F --> |Execution Results| B
-    G --> |Script| H
-    H --> |Audio| B
-    
-    B --> I[Final Animation]
-```
-
+<p align="center">
+  <img src="img/workflow.png" alt="Workflow Image"/>
+</p>
 
 
 ## Installation
