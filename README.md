@@ -6,7 +6,7 @@ A multi-agent system that generates educational animations using 3Blue1Brown's [
 ## Architecture
 
 <p align="center">
-  <img src="img/workflow.png" alt="Workflow Image"/>
+  <img src="img/archflow.png" alt="Workflow Image"/>
 </p>
 
 
