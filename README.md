@@ -46,11 +46,6 @@ or you can refer to [notebook](https://github.com/nihilisticneuralnet/Manya/blob
 | `complexity` | str | "medium" | Complexity level (simple, medium, complex) |
 
 
-## Results
-
-**Prompt: Expand (a+b)^2 without using any squares**
-
-https://github.com/user-attachments/assets/3b2a6c12-e2af-472f-b346-f93b278de2b6
 
 
 
